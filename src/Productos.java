@@ -1,8 +1,9 @@
-public class Productos {
-    String id;
-    String descripcion;
-    short cantidadEnStock;
-    float precioPorUnidad;
-    float porcentajeDeGanancia;
-    boolean disponibleParaVender;
+public abstract class Productos {
+    private String id;
+    private String descripcion;
+    private short cantidadEnStock;
+    private float precioPorUnidad;
+    private float porcentajeDeGanancia;
+    private boolean disponibleParaVender;
+    private int precioFinal;
 }

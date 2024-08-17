@@ -1,4 +1,8 @@
+import java.util.Date;
+
 public class Bebidas extends Productos{
-    float graduacionAlcoholica;
-    boolean importado;
+    private float graduacionAlcoholica;
+    private boolean importado;
+    private Date fechaVencimiento;
+    private short calorias;
 }
