@@ -9,8 +9,7 @@ public class Tienda {
         myTienda.cantidadMaxProductosStock = 200;
         myTienda.saldoEnCaja = 100000;
     }
-
-    public static void menu (Tienda myTienda){
+    public static void mostrar (){
         newTienda();
         System.out.println(myTienda.nombreTienda);
         System.out.println(myTienda.cantidadMaxProductosStock);
