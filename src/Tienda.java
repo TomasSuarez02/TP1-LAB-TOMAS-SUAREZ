@@ -20,15 +20,15 @@ public class Tienda {
             case 0:
                 System.exit(0);
             case 1:
-
+                System.out.println("Usted ingreso a Compra de Productos");
                 break;
             case 2:
-
+                System.out.println("Usted ingreso a Venta de Productos");
                 break;
         }
     }
 
-    public static void main (String args[]){
+    public static void main (String[] args){
         Scanner in = new Scanner(System.in);
         Tienda myTienda = new Tienda();
         System.out.println("Ingrese el nombre de su tienda");
