@@ -7,7 +7,7 @@ public class Tienda {
 
     public static void menu(Tienda myTienda){
         Scanner in = new Scanner(System.in);
-        byte op = 0;
+        byte op;
         do {
             System.out.println("Bienvenido a: " + myTienda.nombreTienda);
             System.out.println("1. Compra de Productos");
