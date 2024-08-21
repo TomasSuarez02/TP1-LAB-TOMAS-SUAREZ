@@ -5,7 +5,7 @@ public abstract class Producto {
     public String descripcion;
     public short cantidadEnStock;
     public float precioPorUnidad;
-    public float porcentajeDeGanancia;
+    public short porcentajeDeGanancia;
     public boolean disponibleParaVender;
     public int precioFinal;
 
@@ -44,7 +44,7 @@ public abstract class Producto {
         } while (opProductos != 0);
     }
 
-    public static void buscarProducto(Producto objeto){
+    /*public static void buscarProducto(Producto objeto){
 
-    }
+    }*/
 }

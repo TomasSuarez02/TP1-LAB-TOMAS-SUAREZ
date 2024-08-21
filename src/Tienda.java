@@ -3,9 +3,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Tienda {
-    private String nombreTienda;
-    private short cantidadMaxProductosStock;
-    private int saldoEnCaja;
+    protected String nombreTienda;
+    protected short cantidadMaxProductosStock;
+    protected int saldoEnCaja;
 
     List<Bebida> listaBebidas = new ArrayList<Bebida>();
 
