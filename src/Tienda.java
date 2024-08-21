@@ -8,6 +8,7 @@ public class Tienda {
     protected int saldoEnCaja;
 
     List<Bebida> listaBebidas = new ArrayList<Bebida>();
+    List<Envasado> listaEnvasados = new ArrayList<Envasado>();
 
     public static void menu(Tienda myTienda){
         Scanner in = new Scanner(System.in);

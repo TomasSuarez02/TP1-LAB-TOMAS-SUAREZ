@@ -28,7 +28,7 @@ public abstract class Producto {
                 break;
             case 2:
                 if (opMenu == 1) {
-                    Envasado.comprar();
+                    Envasado.comprar(myTienda);
                 } else Envasado.vender();
                 break;
             case 3:

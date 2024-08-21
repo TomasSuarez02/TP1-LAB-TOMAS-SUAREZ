@@ -10,7 +10,7 @@ public class Bebida extends Producto {
         Scanner in = new Scanner(System.in);
         Bebida myBebida = new Bebida();
         System.out.println("Ingrese el id: ");
-        myBebida.id = "AB" + in.nextInt();
+        myBebida.id = "AC" + in.nextInt();
         System.out.println("Ingrese la descripción: ");
         myBebida.descripcion = in.nextLine();
         System.out.println("Ingrese la cantidad que desea comprar: ");
@@ -41,14 +41,22 @@ public class Bebida extends Producto {
         } else if (myBebida.graduacionAlcoholica > 4.5) {
             myBebida.calorias = (short) (calorias * 1.5f);
         }
-        if (myBebida.importado) {
-            myBebida.precioFinal = (int) ((int) (myBebida.precioPorUnidad * myBebida.cantidadEnStock) * 1.12);
-        } else myBebida.precioFinal = (int) (myBebida.precioPorUnidad * myBebida.cantidadEnStock);
-        if (myBebida.precioFinal < myTienda.saldoEnCaja && myBebida.cantidadEnStock < myTienda.cantidadMaxProductosStock) {
-            myTienda.listaBebidas.add(myBebida);
-            myTienda.saldoEnCaja -= myBebida.precioFinal;
-            myTienda.cantidadMaxProductosStock -= myBebida.cantidadEnStock;
-        }
+        do {
+            if (myBebida.importado) {
+                myBebida.precioFinal = (int) ((int) (myBebida.precioPorUnidad * myBebida.cantidadEnStock) * 1.12);
+            } else myBebida.precioFinal = (int) (myBebida.precioPorUnidad * myBebida.cantidadEnStock);
+            if (myBebida.precioFinal < myTienda.saldoEnCaja && myBebida.cantidadEnStock < myTienda.cantidadMaxProductosStock) {
+                myTienda.listaBebidas.add(myBebida);
+                myTienda.saldoEnCaja -= myBebida.precioFinal;
+                myTienda.cantidadMaxProductosStock -= myBebida.cantidadEnStock;
+            }else if (myBebida.precioFinal > myTienda.saldoEnCaja) {
+                System.out.println("El saldo en caja es insuficiente, pruebe comprando menos unidades: ");
+                myBebida.cantidadEnStock = in.nextShort();
+            } else if (myBebida.cantidadEnStock > myTienda.cantidadMaxProductosStock) {
+                System.out.println("La capacidad del almacen es insuficiente, pruebe comprando menos unidades: ");
+                myBebida.cantidadEnStock = in.nextShort();
+            }
+        } while (myBebida.precioFinal > myTienda.saldoEnCaja || myBebida.cantidadEnStock > myTienda.cantidadMaxProductosStock);
         System.out.println("¿Desea seguir comprando? 1.Si/2.No");
         op = in.nextByte();
         switch (op){
