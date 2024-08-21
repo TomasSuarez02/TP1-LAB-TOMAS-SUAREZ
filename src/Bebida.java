@@ -72,7 +72,9 @@ public class Bebida extends Producto {
 
     public static void vender(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
+        int totalPagar = 0;
         boolean cond;
+        byte op;
         do {
             System.out.println("Ingrese el id del producto que desea vender: ");
             String leer = "AC" + in.nextInt();
@@ -80,23 +82,53 @@ public class Bebida extends Producto {
             cond = myBebida == null;
             if (myBebida == null) {
                 System.out.println("El id ingresado no existe");
-            } else {
+            } else if (myTienda.venta.size() < 3){
+                myTienda.venta.add(myBebida);
                 System.out.println("aaa");
-            }
+            } else System.out.println("Ya no se pueden agregar mas productos a esta venta");
         } while (cond);
-        System.out.println("¿Desea seguir vendiendo? 1.Si/2.No");
-        byte op = in.nextByte();
-        switch (op) {
-            case 1:
-                op = 2;
-                Producto.elegirProductos(myTienda, op);
-            case 2:
-                Tienda.menu(myTienda);
-            default:
-                while (op < 1 || op > 2) {
-                    System.out.println("Opción no válida, vuelva a Ingresar: ");
-                    op = in.nextByte();
+        if (myTienda.venta.size() < 3) {
+            System.out.println("¿Desea seguir vendiendo? 1.Si/2.No");
+            op = in.nextByte();
+            switch (op) {
+                case 1: {
+                    op = 2;
+                    Producto.elegirProductos(myTienda, op);
                 }
+                case 2: {
+                    do {
+                        System.out.println("El ticket de su venta es: ");
+                        System.out.println("Total a abonar: " + totalPagar);
+                        System.out.println("¿Venta finalizada? 1.Si/2.No");
+                        op = in.nextByte();
+                        if (op == 1) {
+                            myTienda.venta.clear();
+                            Tienda.menu(myTienda);
+                        }
+                    } while (op != 2);
+                }
+                default:
+                    while (op < 1 || op > 2) {
+                        System.out.println("Opción no válida, vuelva a Ingresar: ");
+                        op = in.nextByte();
+                    }
+            }
+        } else {
+            do {
+                System.out.println("El ticket de su venta es: ");
+                for (int i = 0; i < myTienda.venta.size(); i++) {
+                    Producto producto = myTienda.venta.get(i);
+                    System.out.println("El id del producto es: " + producto.id);
+
+                }
+                System.out.println("Total a abonar: " + totalPagar);
+                System.out.println("¿Venta finalizada? 1.Si/2.No");
+                op = in.nextByte();
+                if (op == 1) {
+                    myTienda.venta.clear();
+                    Tienda.menu(myTienda);
+                }
+            } while (op != 2);
         }
     }
 

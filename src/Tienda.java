@@ -7,10 +7,11 @@ public class Tienda {
     protected short cantidadMaxProductosStock;
     protected int saldoEnCaja;
 
-    List<Producto> productosEnStock = new ArrayList<>();
+    // List<Producto> productosEnStock = new ArrayList<>();
     List<Bebida> listaBebidas = new ArrayList<>();
     List<Envasado> listaEnvasados = new ArrayList<>();
     List<Limpieza> listaLimpieza = new ArrayList<>();
+    List<Producto> venta = new ArrayList<>();
 
     public static void menu(Tienda myTienda){
         Scanner in = new Scanner(System.in);
