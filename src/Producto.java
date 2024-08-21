@@ -45,7 +45,7 @@ public abstract class Producto {
         } while (opProductos != 0);
     }
 
-    public static void buscarProducto(){
+    public static void buscarProducto(Tienda myTienda, String buscado){
 
     }
 }

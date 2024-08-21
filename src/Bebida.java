@@ -74,5 +74,6 @@ public class Bebida extends Producto {
         Scanner in = new Scanner(System.in);
         System.out.println("Ingrese el id del producto que desea vender: ");
         String leer = "AC" + in.nextInt();
+        Producto.buscarProducto(myTienda, leer);
     }
 }
