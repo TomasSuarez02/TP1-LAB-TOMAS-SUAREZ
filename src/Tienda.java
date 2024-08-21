@@ -7,8 +7,8 @@ public class Tienda {
     protected short cantidadMaxProductosStock;
     protected int saldoEnCaja;
 
-    List<Bebida> listaBebidas = new ArrayList<Bebida>();
-    List<Envasado> listaEnvasados = new ArrayList<Envasado>();
+    List<Bebida> listaBebidas = new ArrayList<>();
+    List<Envasado> listaEnvasados = new ArrayList<>();
 
     public static void menu(Tienda myTienda){
         Scanner in = new Scanner(System.in);
