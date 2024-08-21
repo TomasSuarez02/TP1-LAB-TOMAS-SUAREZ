@@ -29,6 +29,7 @@ public class Tienda {
                 break;
             case 2:
                 System.out.println("Usted ingreso a Venta de Productos");
+                Producto.elegirProductos(myTienda, opMenu);
                 break;
             default:
                 while (opMenu < 0 || opMenu > 2) {

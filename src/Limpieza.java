@@ -7,7 +7,7 @@ public class Limpieza extends Producto {
         Scanner in = new Scanner(System.in);
         Limpieza myLimpieza = new Limpieza();
         System.out.println("Ingrese el id: ");
-        myLimpieza.id = "AC" + in.nextInt(3);
+        myLimpieza.id = "AC" + in.nextInt();
         System.out.println("Ingrese la descripción: ");
         myLimpieza.descripcion = in.nextLine();
         System.out.println("Ingrese la cantidad que desea comprar: ");

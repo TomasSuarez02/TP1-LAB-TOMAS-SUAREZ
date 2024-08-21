@@ -72,8 +72,38 @@ public class Bebida extends Producto {
 
     public static void vender(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
-        System.out.println("Ingrese el id del producto que desea vender: ");
-        String leer = "AC" + in.nextInt();
-        Producto.buscarProducto(myTienda, leer);
+        boolean cond;
+        do {
+            System.out.println("Ingrese el id del producto que desea vender: ");
+            String leer = "AC" + in.nextInt();
+            Bebida myBebida = buscarBebida(myTienda, leer);
+            cond = myBebida == null;
+            if (myBebida == null) {
+                System.out.println("El id ingresado no existe");
+            } else {
+                System.out.println("aaa");
+            }
+        } while (cond);
+        System.out.println("¿Desea seguir vendiendo? 1.Si/2.No");
+        byte op = in.nextByte();
+        switch (op) {
+            case 1:
+                op = 2;
+                Producto.elegirProductos(myTienda, op);
+            case 2:
+                Tienda.menu(myTienda);
+            default:
+                while (op < 1 || op > 2) {
+                    System.out.println("Opción no válida, vuelva a Ingresar: ");
+                    op = in.nextByte();
+                }
+        }
+    }
+
+    protected static Bebida buscarBebida(Tienda myTienda, String leer) {
+        Bebida myBebida;
+        return myBebida = myTienda.listaBebidas.stream()
+                        .filter(Bebida -> Bebida.id.equals(leer))
+                        .limit(1).findFirst().orElse(null);
     }
 }
