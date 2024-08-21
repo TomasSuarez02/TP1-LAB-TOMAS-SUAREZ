@@ -70,7 +70,7 @@ public class Bebida extends Producto {
         }
     }
 
-    public static void vender(Tienda myTienda) {
+    /* public static void vender(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
         int totalPagar = 0;
         boolean cond;
@@ -130,12 +130,13 @@ public class Bebida extends Producto {
                 }
             } while (op != 2);
         }
-    }
+    } */
 
-    protected static Bebida buscarBebida(Tienda myTienda, String leer) {
+    protected static Bebida buscarBebida(Tienda myTienda, int leer) {
+        String bebidaId = "AC" + leer;
         Bebida myBebida;
         return myBebida = myTienda.listaBebidas.stream()
-                        .filter(Bebida -> Bebida.id.equals(leer))
+                        .filter(Bebida -> Bebida.id.equals(bebidaId))
                         .limit(1).findFirst().orElse(null);
     }
 }

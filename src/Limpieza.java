@@ -7,7 +7,7 @@ public class Limpieza extends Producto {
         Scanner in = new Scanner(System.in);
         Limpieza myLimpieza = new Limpieza();
         System.out.println("Ingrese el id: ");
-        myLimpieza.id = "AC" + in.nextInt();
+        myLimpieza.id = "AZ" + in.nextInt();
         System.out.println("Ingrese la descripción: ");
         myLimpieza.descripcion = in.nextLine();
         System.out.println("Ingrese la cantidad que desea comprar: ");
@@ -63,7 +63,11 @@ public class Limpieza extends Producto {
         }
     }
 
-    public static void vender() {
-
+    protected static Limpieza buscarLimpieza(Tienda myTienda, int leer) {
+        String limpiezaId = "AZ" + leer;
+        Limpieza myLimpieza;
+        return myLimpieza = myTienda.listaLimpieza.stream()
+                .filter(Limpieza -> Limpieza.id.equals(limpiezaId))
+                .limit(1).findFirst().orElse(null);
     }
 }

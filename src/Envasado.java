@@ -63,7 +63,11 @@ public class Envasado extends Producto {
         }
     }
 
-    public static void vender() {
-
+    protected static Envasado buscarEnvasado(Tienda myTienda, int leer) {
+        String envasadoId = "AB" + leer;
+        Envasado myEnvasado;
+        return myEnvasado = myTienda.listaEnvasados.stream()
+                .filter(Envasado -> Envasado.id.equals(envasadoId))
+                .limit(1).findFirst().orElse(null);
     }
 }
