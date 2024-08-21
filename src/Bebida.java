@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class Bebida extends Producto {
-    private float graduacionAlcoholica;
-    private boolean importado;
-    private String fechaVencimiento;
-    private short calorias;
+    protected float graduacionAlcoholica;
+    protected boolean importado;
+    protected String fechaVencimiento;
+    protected short calorias;
 
     public static void comprar(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
@@ -70,9 +70,9 @@ public class Bebida extends Producto {
         }
     }
 
-    public static void vender() {
+    public static void vender(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
         System.out.println("Ingrese el id del producto que desea vender: ");
-        String leer = "AB" + in.nextInt();
+        String leer = "AC" + in.nextInt();
     }
 }

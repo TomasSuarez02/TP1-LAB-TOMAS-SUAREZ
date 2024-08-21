@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class Envasado extends Producto {
-    private String type;
-    private boolean importado;
-    private String fechaVencimiento;
-    private short calorias;
+    protected String type;
+    protected boolean importado;
+    protected String fechaVencimiento;
+    protected short calorias;
 
     public static void comprar(Tienda myTienda) {
         Scanner in = new Scanner(System.in);

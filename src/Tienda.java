@@ -9,6 +9,7 @@ public class Tienda {
 
     List<Bebida> listaBebidas = new ArrayList<>();
     List<Envasado> listaEnvasados = new ArrayList<>();
+    List<Limpieza> listaLimpieza = new ArrayList<>();
 
     public static void menu(Tienda myTienda){
         Scanner in = new Scanner(System.in);

@@ -6,6 +6,7 @@ public abstract class Producto {
     public short cantidadEnStock;
     public float precioPorUnidad;
     public short porcentajeDeGanancia;
+    public short descuento;
     public boolean disponibleParaVender;
     public int precioFinal;
 
@@ -24,7 +25,7 @@ public abstract class Producto {
             case 1:
                 if (opMenu == 1) {
                     Bebida.comprar(myTienda);
-                } else Bebida.vender();
+                } else Bebida.vender(myTienda);
                 break;
             case 2:
                 if (opMenu == 1) {
@@ -33,7 +34,7 @@ public abstract class Producto {
                 break;
             case 3:
                 if (opMenu == 1) {
-                    Limpieza.comprar();
+                    Limpieza.comprar(myTienda);
                 } else Limpieza.vender();
                 break;
             default:
@@ -44,7 +45,7 @@ public abstract class Producto {
         } while (opProductos != 0);
     }
 
-    /*public static void buscarProducto(Producto objeto){
+    public static void buscarProducto(){
 
-    }*/
+    }
 }
