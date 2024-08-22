@@ -59,7 +59,7 @@ public abstract class Producto {
                     cond = myBebida == null;
                     if (myBebida == null) {
                         System.out.println("El id ingresado no existe");
-                    } else if (myTienda.venta.size() < 3){
+                    } else {
                         short stock = myBebida.cantidadEnStock;
                         System.out.println("¿Cuantas unidades desea llevar? Máximo 12");
                         do {
@@ -68,28 +68,39 @@ public abstract class Producto {
                         } while (myBebida.cantidadEnStock > 12);
                         myTienda.venta.add(myBebida);
                         myBebida.cantidadEnStock = (short) (stock - myBebida.cantidadEnStock);
-                        System.out.println("aaa");
-                    } else System.out.println("Ya no se pueden agregar mas productos a esta venta");
+                    }
                     break;
                 case 2:
-                    Limpieza myLimpieza = Limpieza.buscarLimpieza(myTienda, leer);
-                    cond = myLimpieza == null;
-                    if (myLimpieza == null) {
-                        System.out.println("El id ingresado no existe");
-                    } else if (myTienda.venta.size() < 3){
-                        myTienda.venta.add(myLimpieza);
-                        System.out.println("aaa");
-                    } else System.out.println("Ya no se pueden agregar mas productos a esta venta");
-                    break;
-                case 3:
                     Envasado myEnvasado = Envasado.buscarEnvasado(myTienda, leer);
                     cond = myEnvasado == null;
                     if (myEnvasado == null) {
                         System.out.println("El id ingresado no existe");
-                    } else if (myTienda.venta.size() < 3){
+                    } else {
+                        short stock = myEnvasado.cantidadEnStock;
+                        System.out.println("¿Cuantas unidades desea llevar? Máximo 12");
+                        do {
+                            myEnvasado.cantidadEnStock = in.nextShort();
+                            if (myEnvasado.cantidadEnStock > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
+                        } while (myEnvasado.cantidadEnStock > 12);
                         myTienda.venta.add(myEnvasado);
-                        System.out.println("aaa");
-                    } else System.out.println("Ya no se pueden agregar mas productos a esta venta");
+                        myEnvasado.cantidadEnStock = (short) (stock - myEnvasado.cantidadEnStock);
+                    }
+                    break;
+                case 3:
+                    Limpieza myLimpieza = Limpieza.buscarLimpieza(myTienda, leer);
+                    cond = myLimpieza == null;
+                    if (myLimpieza == null) {
+                        System.out.println("El id ingresado no existe");
+                    } else {
+                        short stock = myLimpieza.cantidadEnStock;
+                        System.out.println("¿Cuantas unidades desea llevar? Máximo 12");
+                        do {
+                            myLimpieza.cantidadEnStock = in.nextShort();
+                            if (myLimpieza.cantidadEnStock > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
+                        } while (myLimpieza.cantidadEnStock > 12);
+                        myTienda.venta.add(myLimpieza);
+                        myLimpieza.cantidadEnStock = (short) (stock - myLimpieza.cantidadEnStock);
+                    }
                     break;
             }
         } while (cond);
@@ -104,6 +115,13 @@ public abstract class Producto {
                 case 2: {
                     do {
                         System.out.println("El ticket de su venta es: ");
+                        for (int i = 0; i < myTienda.venta.size(); i++) {
+                            Producto producto = myTienda.venta.get(i);
+                            System.out.println("Id del producto: " + producto.id);
+                            System.out.println("Descripcion: " + producto.descripcion);
+                            System.out.println("Informacion: " + producto.cantidadEnStock + " x " + producto.precioPorUnidad);
+                            totalPagar = (int) (totalPagar + (producto.cantidadEnStock * producto.precioPorUnidad));
+                        }
                         System.out.println("Total a abonar: " + totalPagar);
                         System.out.println("¿Venta finalizada? 1.Si/2.No");
                         op = in.nextByte();
@@ -120,6 +138,7 @@ public abstract class Producto {
                     }
             }
         } else {
+            System.out.println("Ya no se pueden agregar mas productos a esta venta");
             do {
                 System.out.println("El ticket de su venta es: ");
                 for (int i = 0; i < myTienda.venta.size(); i++) {

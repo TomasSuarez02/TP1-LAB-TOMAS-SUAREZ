@@ -6,50 +6,63 @@ public class Limpieza extends Producto {
     public static void comprar(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
         Limpieza myLimpieza = new Limpieza();
-        System.out.println("Ingrese el id: ");
-        myLimpieza.id = "AZ" + in.nextInt();
-        System.out.println("Ingrese la descripción: ");
-        myLimpieza.descripcion = in.nextLine();
-        System.out.println("Ingrese la cantidad que desea comprar: ");
-        myLimpieza.cantidadEnStock = in.nextShort();
-        System.out.println("Ingrese el precio por unidad: ");
-        myLimpieza.precioPorUnidad = in.nextFloat();
-        do {
-            System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 25% ni menor al 10%): ");
-            myLimpieza.porcentajeDeGanancia = in.nextShort();
-        } while (myLimpieza.porcentajeDeGanancia < 10 || myLimpieza.porcentajeDeGanancia > 25);
-        myLimpieza.disponibleParaVender = true;
-        System.out.println("Ingrese el tipo de aplicacion del producto: ");
-        String tipoAplicacion = in.nextLine();
-        do {
-            if (tipoAplicacion.equals("COCINA")
+        byte op;
+        System.out.println("Ingrese el id (3 digitos): ");
+        short leer = in.nextShort();
+        buscarLimpieza(myTienda, leer);
+        boolean condicion;
+        condicion = buscarLimpieza(myTienda, leer) == null;
+        short cantidadComprar;
+        int precioPagar;
+        if (!condicion) {
+            System.out.println("Ingrese la cantidad que desea comprar: ");
+            cantidadComprar = in.nextShort();
+        } else {
+            myLimpieza.id = "AZ" + leer;
+            System.out.println("Ingrese la descripción: ");
+            myLimpieza.descripcion = in.nextLine();
+            System.out.println("Ingrese la cantidad que desea comprar: ");
+            cantidadComprar = in.nextShort();
+            System.out.println("Ingrese el precio por unidad: ");
+            myLimpieza.precioPorUnidad = in.nextFloat();
+            do {
+                System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 25% ni menor al 10%): ");
+                myLimpieza.porcentajeDeGanancia = in.nextShort();
+            } while (myLimpieza.porcentajeDeGanancia < 10 || myLimpieza.porcentajeDeGanancia > 25);
+            myLimpieza.disponibleParaVender = true;
+            System.out.println("Ingrese el tipo de aplicacion del producto: ");
+            String tipoAplicacion = in.nextLine();
+            do {
+                if (tipoAplicacion.equals("COCINA")
+                        || tipoAplicacion.equals("BAÑO")
+                        || tipoAplicacion.equals("ROPA")
+                        || tipoAplicacion.equals("MULTIUSO")) {
+                    myLimpieza.tipoDeAplicacion = tipoAplicacion;
+                } else {
+                    System.out.println("Tipo de aplicación no válido, vuelva  intentar: ");
+                    tipoAplicacion = in.nextLine();
+                }
+            } while (tipoAplicacion.equals("COCINA")
                     || tipoAplicacion.equals("BAÑO")
                     || tipoAplicacion.equals("ROPA")
-                    || tipoAplicacion.equals("MULTIUSO")) {
-                myLimpieza.tipoDeAplicacion = in.nextLine();
-            } else {
-                System.out.println("Tipo de aplicación no válido, vuelva  intentar: ");
-                tipoAplicacion = in.nextLine();
-            }
-        } while (tipoAplicacion.equals("COCINA")
-                || tipoAplicacion.equals("BAÑO")
-                || tipoAplicacion.equals("ROPA")
-                || tipoAplicacion.equals("MULTIUSO"));
+                    || tipoAplicacion.equals("MULTIUSO"));
+        }
         do {
-            myLimpieza.precioFinal = (int) (myLimpieza.precioPorUnidad * myLimpieza.cantidadEnStock);
-            if (myLimpieza.precioFinal < myTienda.saldoEnCaja && myLimpieza.cantidadEnStock < myTienda.cantidadMaxProductosStock) {
+            precioPagar = (int) (myLimpieza.precioPorUnidad * cantidadComprar);
+            if (precioPagar < myTienda.saldoEnCaja && cantidadComprar < myTienda.cantidadMaxProductosStock) {
+                myLimpieza.cantidadEnStock = (short) (myLimpieza.cantidadEnStock + cantidadComprar);
+                myLimpieza.precioFinal = (int) (myLimpieza.cantidadEnStock * myLimpieza.precioPorUnidad);
                 myTienda.listaLimpieza.add(myLimpieza);
-                myTienda.saldoEnCaja -= myLimpieza.precioFinal;
-                myTienda.cantidadMaxProductosStock -= myLimpieza.cantidadEnStock;
-            }else if (myLimpieza.precioFinal > myTienda.saldoEnCaja) {
+                myTienda.saldoEnCaja -= precioPagar;
+                myTienda.cantidadMaxProductosStock -= cantidadComprar;
+            } else if (precioPagar > myTienda.saldoEnCaja) {
                 System.out.println("El saldo en caja es insuficiente, pruebe comprando menos unidades: ");
-                myLimpieza.cantidadEnStock = in.nextShort();
-            } else if (myLimpieza.cantidadEnStock > myTienda.cantidadMaxProductosStock) {
+                cantidadComprar = in.nextShort();
+            } else if (cantidadComprar > myTienda.cantidadMaxProductosStock) {
                 System.out.println("La capacidad del almacen es insuficiente, pruebe comprando menos unidades: ");
-                myLimpieza.cantidadEnStock = in.nextShort();
+                cantidadComprar = in.nextShort();
             }
-        } while (myLimpieza.precioFinal > myTienda.saldoEnCaja || myLimpieza.cantidadEnStock > myTienda.cantidadMaxProductosStock);
-        byte op;
+        } while (precioPagar > myTienda.saldoEnCaja || cantidadComprar > myTienda.cantidadMaxProductosStock);
         System.out.println("¿Desea seguir comprando? 1.Si/2.No");
         op = in.nextByte();
         switch (op){
@@ -65,9 +78,9 @@ public class Limpieza extends Producto {
 
     protected static Limpieza buscarLimpieza(Tienda myTienda, int leer) {
         String limpiezaId = "AZ" + leer;
-        Limpieza myLimpieza;
-        return myLimpieza = myTienda.listaLimpieza.stream()
-                .filter(Limpieza -> Limpieza.id.equals(limpiezaId))
-                .limit(1).findFirst().orElse(null);
+        Limpieza myLimpieza = myTienda.listaLimpieza.stream()
+                            .filter(Limpieza -> Limpieza.id.equals(limpiezaId))
+                            .limit(1).findFirst().orElse(null);
+        return myLimpieza;
     }
 }
