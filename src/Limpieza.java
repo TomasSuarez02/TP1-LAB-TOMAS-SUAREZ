@@ -6,9 +6,13 @@ public class Limpieza extends Producto {
     public static void comprar(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
         Limpieza myLimpieza = new Limpieza();
+        short leer;
         byte op;
-        System.out.println("Ingrese el id (3 digitos): ");
-        short leer = in.nextShort();
+        do {
+            System.out.println("Ingrese el id (3 digitos): ");
+            leer = in.nextShort();
+            if (leer > 999) System.out.println("Valor no válido, vuelva a intentar.");
+        } while (leer > 999);
         buscarLimpieza(myTienda, leer);
         boolean condicion;
         condicion = buscarLimpieza(myTienda, leer) == null;
@@ -29,6 +33,8 @@ public class Limpieza extends Producto {
                 System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 25% ni menor al 10%): ");
                 myLimpieza.porcentajeDeGanancia = in.nextShort();
             } while (myLimpieza.porcentajeDeGanancia < 10 || myLimpieza.porcentajeDeGanancia > 25);
+            System.out.println("Ingrese el descuento aplicable: ");
+            myLimpieza.descuento = in.nextShort();
             myLimpieza.disponibleParaVender = true;
             System.out.println("Ingrese el tipo de aplicacion del producto: ");
             String tipoAplicacion = in.nextLine();

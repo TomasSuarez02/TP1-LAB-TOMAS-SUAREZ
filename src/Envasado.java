@@ -9,9 +9,13 @@ public class Envasado extends Producto {
     public static void comprar(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
         Envasado myEnvasado = new Envasado();
+        short leer;
         byte op;
-        System.out.println("Ingrese el id (3 digitos): ");
-        short leer = in.nextShort();
+        do {
+            System.out.println("Ingrese el id (3 digitos): ");
+            leer = in.nextShort();
+            if (leer > 999) System.out.println("Valor no válido, vuelva a intentar.");
+        } while (leer > 999);
         buscarEnvasado(myTienda, leer);
         boolean condicion;
         condicion = buscarEnvasado(myTienda, leer) == null;
@@ -32,6 +36,8 @@ public class Envasado extends Producto {
                 System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 20%): ");
                 myEnvasado.porcentajeDeGanancia = in.nextShort();
             } while (myEnvasado.porcentajeDeGanancia > 20);
+            System.out.println("Ingrese el descuento aplicable: ");
+            myEnvasado.descuento = in.nextShort();
             myEnvasado.disponibleParaVender = true;
             System.out.println("Ingrese el tipo de envasado: ");
             myEnvasado.type = in.nextLine();

@@ -9,8 +9,13 @@ public class Bebida extends Producto {
     public static void comprar(Tienda myTienda) {
         Scanner in = new Scanner(System.in);
         Bebida myBebida = new Bebida();
-        System.out.println("Ingrese el id (3 digitos): ");
-        short leer = in.nextShort();
+        short leer;
+        byte op;
+        do {
+            System.out.println("Ingrese el id (3 digitos): ");
+            leer = in.nextShort();
+            if (leer > 999) System.out.println("Valor no válido, vuelva a intentar.");
+        } while (leer > 999);
         buscarBebida(myTienda, leer);
         boolean condicion;
         condicion = buscarBebida(myTienda, leer) == null;
@@ -31,10 +36,11 @@ public class Bebida extends Producto {
                 System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 20%): ");
                 myBebida.porcentajeDeGanancia = in.nextShort();
             } while (myBebida.porcentajeDeGanancia > 20);
+            System.out.println("Ingrese el descuento aplicable: ");
+            myBebida.descuento = in.nextShort();
             myBebida.disponibleParaVender = true;
             System.out.println("Ingrese la graduacion alcoholica: ");
             myBebida.graduacionAlcoholica = in.nextFloat();
-            byte op;
             do {
                 System.out.println("¿El producto es importado? 1.Si/2.No");
                 op = in.nextByte();
@@ -71,7 +77,7 @@ public class Bebida extends Producto {
             }
         } while (precioPagar > myTienda.saldoEnCaja || cantidadComprar > myTienda.cantidadMaxProductosStock);
         System.out.println("¿Desea seguir comprando? 1.Si/2.No");
-        byte op = in.nextByte();
+        op = in.nextByte();
         switch (op){
             case 1: Producto.elegirProductos(myTienda, op);
             case 2: Tienda.menu(myTienda);
