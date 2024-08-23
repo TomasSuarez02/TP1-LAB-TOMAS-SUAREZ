@@ -64,8 +64,8 @@ public class Limpieza extends Producto {
             do {
                 System.out.println("Ingrese el descuento aplicable (No puede ser mayor al 20%): ");
                 myLimpieza.descuento = in.nextFloat() / 100;
-                if (myLimpieza.descuento > 0.20) System.out.println("Valor no valido, vuelva a intentar");
-            } while (myLimpieza.descuento > 0.20);
+                if (myLimpieza.descuento > 0.21) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myLimpieza.descuento > 0.21);
             myLimpieza.disponibleParaVender = true;
         }
         do {

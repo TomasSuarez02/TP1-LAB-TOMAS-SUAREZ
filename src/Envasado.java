@@ -41,13 +41,13 @@ public class Envasado extends Producto {
             do {
                 System.out.println("Ingrese el porcentaje de ganancia (No puede ser mayor al 20%): ");
                 myEnvasado.porcentajeDeGanancia = in.nextFloat() / 100;
-                if (myEnvasado.porcentajeDeGanancia > 0.20) System.out.println("Valor no valido, vuelva a intentar");
-            } while (myEnvasado.porcentajeDeGanancia > 0.20);
+                if (myEnvasado.porcentajeDeGanancia > 0.21) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myEnvasado.porcentajeDeGanancia > 0.21);
             do {
                 System.out.println("Ingrese el descuento aplicable (No puede ser mayor al 15%): ");
                 myEnvasado.descuento = in.nextFloat() / 100;
-                if (myEnvasado.descuento > 0.15) System.out.println("Valor no valido, vuelva a intentar");
-            } while (myEnvasado.descuento > 0.15);
+                if (myEnvasado.descuento > 0.16) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myEnvasado.descuento > 0.16);
             myEnvasado.disponibleParaVender = true;
             System.out.println("Ingrese el tipo de envasado: ");
             myEnvasado.type = in.nextLine();

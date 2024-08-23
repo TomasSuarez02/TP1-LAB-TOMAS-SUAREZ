@@ -48,6 +48,8 @@ public abstract class Producto {
 
     public static void vender (Tienda myTienda, byte opProductos) throws ParseException {
         Scanner in = new Scanner(System.in);
+        short cantidadTotalComprar = 0;
+        short cantidadComprar = 0;
         float totalPagar = 0;
         boolean cond = false;
         byte op;
@@ -63,18 +65,19 @@ public abstract class Producto {
                         short stock = myBebida.cantidadEnStock;
                         System.out.println("¿Cuantas unidades desea llevar? Máximo 12");
                         do {
-                            myBebida.cantidadEnStock = in.nextShort();
-                            if (myBebida.cantidadEnStock > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
-                        } while (myBebida.cantidadEnStock > 12);
-                        if (stock > myBebida.cantidadEnStock) {
+                            cantidadComprar = in.nextShort();
+                            if (cantidadComprar > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
+                        } while (cantidadComprar > 12);
+                        if (stock >= cantidadComprar) {
+                            myBebida.cantidadEnStock = (short) (stock - cantidadComprar);
                             myTienda.venta.add(myBebida);
-                            myBebida.cantidadEnStock = (short) (stock - myBebida.cantidadEnStock);
+                            myBebida.cantidadEnStock = cantidadComprar;
                         } else {
                             System.out.println("No hay Stock suficiente, se venderan solamente: " + stock + " unidades.");
-                            myBebida.cantidadEnStock = stock;
-                            myTienda.venta.add(myBebida);
-                            myBebida.cantidadEnStock = 0;
                             myBebida.disponibleParaVender = false;
+                            myBebida.cantidadEnStock = 0;
+                            myTienda.venta.add(myBebida);
+                            myBebida.cantidadEnStock = stock;
                         }
                     } else System.out.println("El Producto: " + myBebida.id + " - " + myBebida.descripcion + " no se encuentra disponible para la venta.");
                     break;
@@ -87,18 +90,19 @@ public abstract class Producto {
                         short stock = myEnvasado.cantidadEnStock;
                         System.out.println("¿Cuantas unidades desea llevar? Máximo 12");
                         do {
-                            myEnvasado.cantidadEnStock = in.nextShort();
-                            if (myEnvasado.cantidadEnStock > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
-                        } while (myEnvasado.cantidadEnStock > 12);
-                        if (stock > myEnvasado.cantidadEnStock) {
+                            cantidadComprar = in.nextShort();
+                            if (cantidadComprar > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
+                        } while (cantidadComprar > 12);
+                        if (stock >= cantidadComprar) {
+                            myEnvasado.cantidadEnStock = (short) (stock - cantidadComprar);
                             myTienda.venta.add(myEnvasado);
-                            myEnvasado.cantidadEnStock = (short) (stock - myEnvasado.cantidadEnStock);
+                            myEnvasado.cantidadEnStock = cantidadComprar;
                         } else {
                             System.out.println("No hay Stock suficiente, se venderan solamente: " + stock + " unidades.");
-                            myEnvasado.cantidadEnStock = stock;
-                            myTienda.venta.add(myEnvasado);
-                            myEnvasado.cantidadEnStock = 0;
                             myEnvasado.disponibleParaVender = false;
+                            myEnvasado.cantidadEnStock = 0;
+                            myTienda.venta.add(myEnvasado);
+                            myEnvasado.cantidadEnStock = stock;
                         }
                     } else System.out.println("El Producto: " + myEnvasado.id + " - " + myEnvasado.descripcion + " no se encuentra disponible para la venta.");
                     break;
@@ -111,18 +115,19 @@ public abstract class Producto {
                         short stock = myLimpieza.cantidadEnStock;
                         System.out.println("¿Cuantas unidades desea llevar? Máximo 12");
                         do {
-                            myLimpieza.cantidadEnStock = in.nextShort();
-                            if (myLimpieza.cantidadEnStock > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
-                        } while (myLimpieza.cantidadEnStock > 12);
-                        if (stock > myLimpieza.cantidadEnStock) {
+                            cantidadComprar = in.nextShort();
+                            if (cantidadComprar > 12) System.out.println("Cantidad no valida, vuelva a ingresar");
+                        } while (cantidadComprar > 12);
+                        if (stock >= cantidadComprar) {
+                            myLimpieza.cantidadEnStock = (short) (stock - cantidadComprar);
                             myTienda.venta.add(myLimpieza);
-                            myLimpieza.cantidadEnStock = (short) (stock - myLimpieza.cantidadEnStock);
+                            myLimpieza.cantidadEnStock = cantidadComprar;
                         } else {
                             System.out.println("No hay Stock suficiente, se venderan solamente: " + stock + " unidades.");
-                            myLimpieza.cantidadEnStock = stock;
-                            myTienda.venta.add(myLimpieza);
-                            myLimpieza.cantidadEnStock = 0;
                             myLimpieza.disponibleParaVender = false;
+                            myLimpieza.cantidadEnStock = 0;
+                            myTienda.venta.add(myLimpieza);
+                            myLimpieza.cantidadEnStock = stock;
                         }
                     } else System.out.println("El Producto: " + myLimpieza.id + " - " + myLimpieza.descripcion + " no se encuentra disponible para la venta.");
                     break;
@@ -140,16 +145,19 @@ public abstract class Producto {
                     do {
                         System.out.println("El ticket de su venta es: ");
                         for (int i = 0; i < myTienda.venta.size(); i++) {
-                            Producto producto = myTienda.venta.get(i);
-                            System.out.println("Id del producto: " + producto.id);
-                            System.out.println("Descripcion: " + producto.descripcion);
-                            System.out.println("Informacion: " + producto.cantidadEnStock + " x " + producto.precioPorUnidad);
-                            totalPagar = (int) (totalPagar + (producto.cantidadEnStock * producto.precioFinal));
+                            Producto myProducto = myTienda.venta.get(i);
+                            System.out.println("Id del producto: " + myProducto.id);
+                            System.out.println("Descripcion: " + myProducto.descripcion);
+                            System.out.println("Informacion: " + myProducto.cantidadEnStock + " x " + myProducto.precioPorUnidad);
+                            totalPagar = (int) (totalPagar + (myProducto.cantidadEnStock * myProducto.precioFinal));
+                            cantidadTotalComprar += myProducto.cantidadEnStock;
                         }
                         System.out.println("Total a abonar: " + totalPagar);
                         System.out.println("¿Venta finalizada? 1.Si/2.No");
                         op = in.nextByte();
                         if (op == 1) {
+                            myTienda.cantidadMaxProductosStock += cantidadTotalComprar;
+                            myTienda.saldoEnCaja += totalPagar;
                             myTienda.venta.clear();
                             Tienda.menu(myTienda);
                         }
@@ -171,6 +179,7 @@ public abstract class Producto {
                     System.out.println("Descripcion: " + myProducto.descripcion);
                     System.out.println("Informacion: " + myProducto.cantidadEnStock + " x " + myProducto.precioPorUnidad);
                     totalPagar = (int) (totalPagar + (myProducto.cantidadEnStock * myProducto.precioPorUnidad));
+                    cantidadTotalComprar += myProducto.cantidadEnStock;
                 }
                 System.out.println("Total a abonar: " + totalPagar);
                 System.out.println("¿Venta finalizada? 1.Si/2.No");

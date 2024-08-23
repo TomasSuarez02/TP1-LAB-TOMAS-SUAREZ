@@ -41,13 +41,13 @@ public class Bebida extends Producto {
             do {
                 System.out.println("Ingrese el porcentaje de ganancia (No puede ser mayor al 20%): ");
                 myBebida.porcentajeDeGanancia = in.nextFloat() / 100;
-                if (myBebida.porcentajeDeGanancia > 0.20) System.out.println("Valor no valido, vuelva a intentar");
-            } while (myBebida.porcentajeDeGanancia > 0.20);
+                if (myBebida.porcentajeDeGanancia > 0.21) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myBebida.porcentajeDeGanancia > 0.21);
             do {
                 System.out.println("Ingrese el descuento aplicable (No puede ser mayor al 10%): ");
                 myBebida.descuento = in.nextFloat() / 100;
-                if (myBebida.descuento > 0.10) System.out.println("Valor no valido, vuelva a intentar");
-            } while (myBebida.descuento > 0.10);
+                if (myBebida.descuento > 0.11) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myBebida.descuento > 0.11);
             myBebida.disponibleParaVender = true;
             System.out.println("Ingrese la graduacion alcoholica: ");
             myBebida.graduacionAlcoholica = in.nextFloat();

@@ -3,12 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/*
-    AGREGAR:
-            - SUMAR VALOR DE VENTA A SALDO EN CAJA
-            - SUMAR CANTIDAD VENDIDA A CAPACIDAD DE ALMACENAJE
-*/
-
 public class Tienda {
     protected String nombreTienda;
     protected short cantidadMaxProductosStock;
