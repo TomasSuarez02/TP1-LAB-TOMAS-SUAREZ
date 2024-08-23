@@ -47,6 +47,10 @@ public class Tienda {
                 System.out.println("Ingrese el valor de descuento para filtrar: ");
                 short descuento = in.nextShort();
                 Producto.buscarPorDescuento(myTienda, descuento);
+                for (int i = 0; i < myTienda.mostrarPorDescuento.size(); i++) {
+                    Producto myProducto = myTienda.mostrarPorDescuento.get(i);
+                    System.out.println("Id: " + myProducto.id + "Descripción: " + myProducto.descripcion);
+                }
                 break;
             default:
                 while (opMenu < 0 || opMenu > 3) {

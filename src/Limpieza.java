@@ -34,7 +34,7 @@ public class Limpieza extends Producto {
             System.out.println("Ingrese el precio por unidad: ");
             myLimpieza.precioPorUnidad = in.nextFloat();
             System.out.println("Ingrese el tipo de aplicacion del producto (COCINA/BAÑO/ROPA/MULTIUSO): ");
-            String tipoAplicacion = leerString.nextLine();
+            String tipoAplicacion = leerString.nextLine().toUpperCase();
             do if (tipoAplicacion.equals("COCINA")
                         || tipoAplicacion.equals("BAÑO")
                         || tipoAplicacion.equals("ROPA")

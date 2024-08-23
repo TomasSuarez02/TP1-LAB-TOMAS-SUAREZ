@@ -196,9 +196,5 @@ public abstract class Producto {
             Limpieza myLimpieza = myTienda.listaLimpieza.get(i);
             if (myLimpieza.descuento < descuento) myTienda.mostrarPorDescuento.add(myLimpieza);
         }
-        for (int i = 0; i < myTienda.mostrarPorDescuento.size(); i++) {
-            Producto myProducto = myTienda.mostrarPorDescuento.get(i);
-            System.out.println("Id: " + myProducto.id + "Descripción: " + myProducto.descripcion);
-        }
     }
 }
