@@ -1,10 +1,12 @@
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Limpieza extends Producto {
     protected String tipoDeAplicacion;
 
-    public static void comprar(Tienda myTienda) {
+    public static void comprar(Tienda myTienda) throws ParseException {
         Scanner in = new Scanner(System.in);
+        Scanner leerString = new Scanner(System.in);
         Limpieza myLimpieza = new Limpieza();
         short leer;
         byte op;
@@ -24,7 +26,7 @@ public class Limpieza extends Producto {
         } else {
             myLimpieza.id = "AZ" + leer;
             System.out.println("Ingrese la descripción: ");
-            myLimpieza.descripcion = in.nextLine();
+            myLimpieza.descripcion = leerString.nextLine();
             System.out.println("Ingrese la cantidad que desea comprar: ");
             cantidadComprar = in.nextShort();
             System.out.println("Ingrese el precio por unidad: ");
@@ -37,7 +39,7 @@ public class Limpieza extends Producto {
             myLimpieza.descuento = in.nextShort();
             myLimpieza.disponibleParaVender = true;
             System.out.println("Ingrese el tipo de aplicacion del producto: ");
-            String tipoAplicacion = in.nextLine();
+            String tipoAplicacion = leerString.nextLine();
             do {
                 if (tipoAplicacion.equals("COCINA")
                         || tipoAplicacion.equals("BAÑO")
@@ -46,7 +48,7 @@ public class Limpieza extends Producto {
                     myLimpieza.tipoDeAplicacion = tipoAplicacion;
                 } else {
                     System.out.println("Tipo de aplicación no válido, vuelva  intentar: ");
-                    tipoAplicacion = in.nextLine();
+                    tipoAplicacion = leerString.nextLine();
                 }
             } while (tipoAplicacion.equals("COCINA")
                     || tipoAplicacion.equals("BAÑO")
@@ -84,9 +86,8 @@ public class Limpieza extends Producto {
 
     protected static Limpieza buscarLimpieza(Tienda myTienda, int leer) {
         String limpiezaId = "AZ" + leer;
-        Limpieza myLimpieza = myTienda.listaLimpieza.stream()
+        return myTienda.listaLimpieza.stream()
                             .filter(Limpieza -> Limpieza.id.equals(limpiezaId))
                             .limit(1).findFirst().orElse(null);
-        return myLimpieza;
     }
 }

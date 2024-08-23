@@ -1,6 +1,13 @@
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+/*
+    AGREGAR:
+            - SUMAR VALOR DE VENTA A SALDO EN CAJA
+            - SUMAR CANTIDAD VENDIDA A CAPACIDAD DE ALMACENAJE
+*/
 
 public class Tienda {
     protected String nombreTienda;
@@ -13,9 +20,11 @@ public class Tienda {
     List<Limpieza> listaLimpieza = new ArrayList<>();
     List<Producto> venta = new ArrayList<>();
 
-    public static void menu(Tienda myTienda){
+    public static void menu(Tienda myTienda) throws ParseException {
         Scanner in = new Scanner(System.in);
         System.out.println("Bienvenido a: " + myTienda.nombreTienda);
+        System.out.println("Saldo en caja: " + myTienda.saldoEnCaja);
+        System.out.println("Capacidad de almacenaje disponible: " + myTienda.cantidadMaxProductosStock);
         System.out.println("1. Compra de Productos");
         System.out.println("2. Venta de Productos");
         System.out.println("0. Salir");
@@ -40,7 +49,7 @@ public class Tienda {
         } while (opMenu != 0);
     }
 
-    public static void main (String[] args){
+    public static void main (String[] args) throws ParseException {
         Scanner in = new Scanner(System.in);
         Tienda myTienda = new Tienda();
         System.out.println("Ingrese el nombre de su tienda: ");

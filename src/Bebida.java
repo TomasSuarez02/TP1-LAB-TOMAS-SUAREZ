@@ -1,13 +1,18 @@
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Bebida extends Producto {
     protected float graduacionAlcoholica;
     protected boolean importado;
-    protected String fechaVencimiento;
+    protected Date fechaVencimiento;
     protected short calorias;
 
-    public static void comprar(Tienda myTienda) {
+    public static void comprar(Tienda myTienda) throws ParseException {
         Scanner in = new Scanner(System.in);
+        Scanner leerString = new Scanner(System.in);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Bebida myBebida = new Bebida();
         short leer;
         byte op;
@@ -27,7 +32,7 @@ public class Bebida extends Producto {
         } else {
             myBebida.id = "AC" + leer;
             System.out.println("Ingrese la descripción: ");
-            myBebida.descripcion = in.nextLine();
+            myBebida.descripcion = leerString.nextLine();
             System.out.println("Ingrese la cantidad que desea comprar: ");
             cantidadComprar = in.nextShort();
             System.out.println("Ingrese el precio por unidad: ");
@@ -46,8 +51,9 @@ public class Bebida extends Producto {
                 op = in.nextByte();
                 myBebida.importado = op == 1;
             } while (op < 1 || op > 2);
-            System.out.println("Ingrese la fecha de vencimiento: ");
-            myBebida.fechaVencimiento = in.nextLine();
+            System.out.println("Ingrese la fecha de vencimiento (Formato 'DD/MM/YYYY'): ");
+            String fecha = leerString.nextLine();
+            myBebida.fechaVencimiento = dateFormat.parse(fecha);
             System.out.println("Ingrese las calorías del producto: ");
             short calorias = in.nextShort();
             if (myBebida.graduacionAlcoholica > 0 && myBebida.graduacionAlcoholica < 2) {
@@ -91,9 +97,8 @@ public class Bebida extends Producto {
 
     protected static Bebida buscarBebida(Tienda myTienda, int leer) {
         String bebidaId = "AC" + leer;
-        Bebida myBebida = myTienda.listaBebidas.stream()
+        return myTienda.listaBebidas.stream()
                         .filter(Bebida -> Bebida.id.equals(bebidaId))
                         .limit(1).findFirst().orElse(null);
-        return myBebida;
     }
 }

@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.Scanner;
 
 public abstract class Producto {
@@ -10,7 +11,7 @@ public abstract class Producto {
     public boolean disponibleParaVender;
     public int precioFinal;
 
-    public static void elegirProductos (Tienda myTienda, byte opMenu){
+    public static void elegirProductos (Tienda myTienda, byte opMenu) throws ParseException {
         Scanner in = new Scanner(System.in);
         System.out.println("Elija que tipo de productos va a escoger: ");
         System.out.println("1. Bebidas");
@@ -45,7 +46,7 @@ public abstract class Producto {
         } while (opProductos != 0);
     }
 
-    public static void vender (Tienda myTienda, byte opProductos){
+    public static void vender (Tienda myTienda, byte opProductos) throws ParseException {
         Scanner in = new Scanner(System.in);
         int totalPagar = 0;
         boolean cond = false;
