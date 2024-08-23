@@ -48,22 +48,22 @@ public class Limpieza extends Producto {
             } while (!tipo);
             if (tipoAplicacion.equals("BAÑO") || tipoAplicacion.equals("ROPA")) {
                 do {
-                    System.out.println("Ingrese el porcentaje de ganancia (Formato: 0.X) No puede ser mayor al 25% ni menor al 10%): ");
-                    myLimpieza.porcentajeDeGanancia = in.nextShort();
+                    System.out.println("Ingrese el porcentaje de ganancia (No puede ser mayor al 25% ni menor al 10%): ");
+                    myLimpieza.porcentajeDeGanancia = in.nextFloat() / 100;
                     if (myLimpieza.porcentajeDeGanancia < 0.10 || myLimpieza.porcentajeDeGanancia > 0.25)
                         System.out.println("Valor no valido, vuelva a intentar");
                 } while (myLimpieza.porcentajeDeGanancia < 0.10 || myLimpieza.porcentajeDeGanancia > 0.25);
             } else {
                 do {
-                    System.out.println("Ingrese el porcentaje de ganancia (Formato: 0.X) No puede ser mayor al 25%: ");
-                    myLimpieza.porcentajeDeGanancia = in.nextShort();
+                    System.out.println("Ingrese el porcentaje de ganancia (No puede ser mayor al 25%): ");
+                    myLimpieza.porcentajeDeGanancia = in.nextFloat() / 100;
                     if (myLimpieza.porcentajeDeGanancia > 0.25)
                         System.out.println("Valor no valido, vuelva a intentar");
                 } while (myLimpieza.porcentajeDeGanancia > 0.25);
             }
             do {
-                System.out.println("Ingrese el descuento aplicable (Formato: 0.X) no puede ser mayor al 20%: ");
-                myLimpieza.descuento = in.nextShort();
+                System.out.println("Ingrese el descuento aplicable (No puede ser mayor al 20%): ");
+                myLimpieza.descuento = in.nextFloat() / 100;
                 if (myLimpieza.descuento > 0.20) System.out.println("Valor no valido, vuelva a intentar");
             } while (myLimpieza.descuento > 0.20);
             myLimpieza.disponibleParaVender = true;

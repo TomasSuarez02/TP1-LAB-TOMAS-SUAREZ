@@ -48,7 +48,7 @@ public abstract class Producto {
 
     public static void vender (Tienda myTienda, byte opProductos) throws ParseException {
         Scanner in = new Scanner(System.in);
-        int totalPagar = 0;
+        float totalPagar = 0;
         boolean cond = false;
         byte op;
         do {
