@@ -143,11 +143,11 @@ public abstract class Producto {
             do {
                 System.out.println("El ticket de su venta es: ");
                 for (int i = 0; i < myTienda.venta.size(); i++) {
-                    Producto producto = myTienda.venta.get(i);
-                    System.out.println("Id del producto: " + producto.id);
-                    System.out.println("Descripcion: " + producto.descripcion);
-                    System.out.println("Informacion: " + producto.cantidadEnStock + " x " + producto.precioPorUnidad);
-                    totalPagar = (int) (totalPagar + (producto.cantidadEnStock * producto.precioPorUnidad));
+                    Producto myProducto = myTienda.venta.get(i);
+                    System.out.println("Id del producto: " + myProducto.id);
+                    System.out.println("Descripcion: " + myProducto.descripcion);
+                    System.out.println("Informacion: " + myProducto.cantidadEnStock + " x " + myProducto.precioPorUnidad);
+                    totalPagar = (int) (totalPagar + (myProducto.cantidadEnStock * myProducto.precioPorUnidad));
                 }
                 System.out.println("Total a abonar: " + totalPagar);
                 System.out.println("¿Venta finalizada? 1.Si/2.No");
@@ -157,6 +157,25 @@ public abstract class Producto {
                     Tienda.menu(myTienda);
                 }
             } while (op != 2);
+        }
+    }
+
+    public static void buscarPorDescuento (Tienda myTienda, short descuento) {
+        for (int i = 0; i < myTienda.listaBebidas.size(); i++) {
+            Bebida myBebida = myTienda.listaBebidas.get(i);
+            if (myBebida.descuento < descuento && !myBebida.importado) myTienda.mostrarPorDescuento.add(myBebida);
+        }
+        for (int i = 0; i < myTienda.listaEnvasados.size(); i++) {
+            Envasado myEnvasado = myTienda.listaEnvasados.get(i);
+            if (myEnvasado.descuento < descuento && !myEnvasado.importado) myTienda.mostrarPorDescuento.add(myEnvasado);
+        }
+        for (int i = 0; i < myTienda.listaLimpieza.size(); i++) {
+            Limpieza myLimpieza = myTienda.listaLimpieza.get(i);
+            if (myLimpieza.descuento < descuento) myTienda.mostrarPorDescuento.add(myLimpieza);
+        }
+        for (int i = 0; i < myTienda.mostrarPorDescuento.size(); i++) {
+            Producto myProducto = myTienda.mostrarPorDescuento.get(i);
+            System.out.println("Id: " + myProducto.id + "Descripción: " + myProducto.descripcion);
         }
     }
 }

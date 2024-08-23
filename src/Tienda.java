@@ -14,11 +14,11 @@ public class Tienda {
     protected short cantidadMaxProductosStock;
     protected int saldoEnCaja;
 
-    // List<Producto> productosEnStock = new ArrayList<>();
     List<Bebida> listaBebidas = new ArrayList<>();
     List<Envasado> listaEnvasados = new ArrayList<>();
     List<Limpieza> listaLimpieza = new ArrayList<>();
     List<Producto> venta = new ArrayList<>();
+    List<Producto> mostrarPorDescuento = new ArrayList<>();
 
     public static void menu(Tienda myTienda) throws ParseException {
         Scanner in = new Scanner(System.in);
@@ -27,6 +27,7 @@ public class Tienda {
         System.out.println("Capacidad de almacenaje disponible: " + myTienda.cantidadMaxProductosStock);
         System.out.println("1. Compra de Productos");
         System.out.println("2. Venta de Productos");
+        System.out.println("3. Mostrar productos por descuento");
         System.out.println("0. Salir");
         System.out.println("Ingrese una opción: ");
         byte opMenu = in.nextByte();
@@ -41,8 +42,14 @@ public class Tienda {
                 System.out.println("Usted ingreso a Venta de Productos");
                 Producto.elegirProductos(myTienda, opMenu);
                 break;
+            case 3:
+                System.out.println("Usted ingreso a Mostrar productos por descuento");
+                System.out.println("Ingrese el valor de descuento para filtrar: ");
+                short descuento = in.nextShort();
+                Producto.buscarPorDescuento(myTienda, descuento);
+                break;
             default:
-                while (opMenu < 0 || opMenu > 2) {
+                while (opMenu < 0 || opMenu > 3) {
                     System.out.println("Opción no válida, vuelva a Ingresar: ");
                     opMenu = in.nextByte();
                 }
