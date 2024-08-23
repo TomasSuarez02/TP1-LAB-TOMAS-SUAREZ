@@ -49,7 +49,7 @@ public abstract class Producto {
     public static void vender (Tienda myTienda, byte opProductos) throws ParseException {
         Scanner in = new Scanner(System.in);
         short cantidadTotalComprar = 0;
-        short cantidadComprar = 0;
+        short cantidadComprar;
         float totalPagar = 0;
         boolean cond = false;
         byte op;
