@@ -14,6 +14,9 @@ public class Envasado extends Producto {
         Scanner leerString = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Envasado myEnvasado = new Envasado();
+        short cantidadComprar;
+        float precioFinal;
+        float precioPagar;
         short leer;
         byte op;
         do {
@@ -24,8 +27,6 @@ public class Envasado extends Producto {
         buscarEnvasado(myTienda, leer);
         boolean condicion;
         condicion = buscarEnvasado(myTienda, leer) == null;
-        short cantidadComprar;
-        int precioPagar;
         if (!condicion) {
             System.out.println("Ingrese la cantidad que desea comprar: ");
             cantidadComprar = in.nextShort();
@@ -38,11 +39,15 @@ public class Envasado extends Producto {
             System.out.println("Ingrese el precio por unidad: ");
             myEnvasado.precioPorUnidad = in.nextFloat();
             do {
-                System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 20%): ");
+                System.out.println("Ingrese el porcentaje de ganancia (Formato 0.X) No puede ser mayor al 20%: ");
                 myEnvasado.porcentajeDeGanancia = in.nextShort();
-            } while (myEnvasado.porcentajeDeGanancia > 20);
-            System.out.println("Ingrese el descuento aplicable: ");
-            myEnvasado.descuento = in.nextShort();
+                if (myEnvasado.porcentajeDeGanancia > 0.20) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myEnvasado.porcentajeDeGanancia > 0.20);
+            do {
+                System.out.println("Ingrese el descuento aplicable (Formato: 0.X) no puede ser mayor al 15%: ");
+                myEnvasado.descuento = in.nextShort();
+                if (myEnvasado.descuento > 0.15) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myEnvasado.descuento > 0.15);
             myEnvasado.disponibleParaVender = true;
             System.out.println("Ingrese el tipo de envasado: ");
             myEnvasado.type = in.nextLine();
@@ -51,7 +56,7 @@ public class Envasado extends Producto {
                 op = in.nextByte();
                 myEnvasado.importado = op == 1;
             } while (op < 1 || op > 2);
-            System.out.println("Ingrese la fecha de vencimiento: ");
+            System.out.println("Ingrese la fecha de vencimiento (Formato 'DD/MM/YYYY'): ");
             String fecha = leerString.nextLine();
             myEnvasado.fechaVencimiento = dateFormat.parse(fecha);
             System.out.println("Ingrese las calorías del producto: ");
@@ -59,11 +64,14 @@ public class Envasado extends Producto {
         }
         do {
             if (myEnvasado.importado) {
-                precioPagar = (int) ((int) (myEnvasado.precioPorUnidad * cantidadComprar) * 1.12);
-            } else precioPagar = (int) (myEnvasado.precioPorUnidad * cantidadComprar);
+                precioFinal = (float) ((myEnvasado.precioPorUnidad * 1.12) - (myEnvasado.precioPorUnidad * myEnvasado.descuento));
+            } else {
+                precioFinal = myEnvasado.precioPorUnidad - (myEnvasado.precioPorUnidad * myEnvasado.descuento);
+            }
+            precioPagar = myEnvasado.precioPorUnidad * cantidadComprar;
             if (precioPagar < myTienda.saldoEnCaja && cantidadComprar < myTienda.cantidadMaxProductosStock) {
                 myEnvasado.cantidadEnStock = (short) (myEnvasado.cantidadEnStock + cantidadComprar);
-                myEnvasado.precioFinal = (int) (myEnvasado.cantidadEnStock * myEnvasado.precioPorUnidad);
+                myEnvasado.precioFinal = precioFinal + precioFinal * myEnvasado.porcentajeDeGanancia;
                 myTienda.listaEnvasados.add(myEnvasado);
                 myTienda.saldoEnCaja -= precioPagar;
                 myTienda.cantidadMaxProductosStock -= cantidadComprar;

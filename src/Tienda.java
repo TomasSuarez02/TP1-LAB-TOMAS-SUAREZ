@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Tienda {
     protected String nombreTienda;
     protected short cantidadMaxProductosStock;
-    protected int saldoEnCaja;
+    protected float saldoEnCaja;
 
     List<Bebida> listaBebidas = new ArrayList<>();
     List<Envasado> listaEnvasados = new ArrayList<>();

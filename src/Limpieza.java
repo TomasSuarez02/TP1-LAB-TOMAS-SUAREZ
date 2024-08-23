@@ -8,6 +8,10 @@ public class Limpieza extends Producto {
         Scanner in = new Scanner(System.in);
         Scanner leerString = new Scanner(System.in);
         Limpieza myLimpieza = new Limpieza();
+        short cantidadComprar;
+        float precioFinal;
+        float precioPagar;
+        boolean tipo;
         short leer;
         byte op;
         do {
@@ -18,8 +22,6 @@ public class Limpieza extends Producto {
         buscarLimpieza(myTienda, leer);
         boolean condicion;
         condicion = buscarLimpieza(myTienda, leer) == null;
-        short cantidadComprar;
-        int precioPagar;
         if (!condicion) {
             System.out.println("Ingrese la cantidad que desea comprar: ");
             cantidadComprar = in.nextShort();
@@ -31,35 +33,47 @@ public class Limpieza extends Producto {
             cantidadComprar = in.nextShort();
             System.out.println("Ingrese el precio por unidad: ");
             myLimpieza.precioPorUnidad = in.nextFloat();
-            do {
-                System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 25% ni menor al 10%): ");
-                myLimpieza.porcentajeDeGanancia = in.nextShort();
-            } while (myLimpieza.porcentajeDeGanancia < 10 || myLimpieza.porcentajeDeGanancia > 25);
-            System.out.println("Ingrese el descuento aplicable: ");
-            myLimpieza.descuento = in.nextShort();
-            myLimpieza.disponibleParaVender = true;
-            System.out.println("Ingrese el tipo de aplicacion del producto: ");
+            System.out.println("Ingrese el tipo de aplicacion del producto (COCINA/BAÑO/ROPA/MULTIUSO): ");
             String tipoAplicacion = leerString.nextLine();
-            do {
-                if (tipoAplicacion.equals("COCINA")
+            do if (tipoAplicacion.equals("COCINA")
                         || tipoAplicacion.equals("BAÑO")
                         || tipoAplicacion.equals("ROPA")
                         || tipoAplicacion.equals("MULTIUSO")) {
+                    tipo = true;
                     myLimpieza.tipoDeAplicacion = tipoAplicacion;
                 } else {
+                    tipo = false;
                     System.out.println("Tipo de aplicación no válido, vuelva  intentar: ");
                     tipoAplicacion = leerString.nextLine();
-                }
-            } while (tipoAplicacion.equals("COCINA")
-                    || tipoAplicacion.equals("BAÑO")
-                    || tipoAplicacion.equals("ROPA")
-                    || tipoAplicacion.equals("MULTIUSO"));
+            } while (!tipo);
+            if (tipoAplicacion.equals("BAÑO") || tipoAplicacion.equals("ROPA")) {
+                do {
+                    System.out.println("Ingrese el porcentaje de ganancia (Formato: 0.X) No puede ser mayor al 25% ni menor al 10%): ");
+                    myLimpieza.porcentajeDeGanancia = in.nextShort();
+                    if (myLimpieza.porcentajeDeGanancia < 0.10 || myLimpieza.porcentajeDeGanancia > 0.25)
+                        System.out.println("Valor no valido, vuelva a intentar");
+                } while (myLimpieza.porcentajeDeGanancia < 0.10 || myLimpieza.porcentajeDeGanancia > 0.25);
+            } else {
+                do {
+                    System.out.println("Ingrese el porcentaje de ganancia (Formato: 0.X) No puede ser mayor al 25%: ");
+                    myLimpieza.porcentajeDeGanancia = in.nextShort();
+                    if (myLimpieza.porcentajeDeGanancia > 0.25)
+                        System.out.println("Valor no valido, vuelva a intentar");
+                } while (myLimpieza.porcentajeDeGanancia > 0.25);
+            }
+            do {
+                System.out.println("Ingrese el descuento aplicable (Formato: 0.X) no puede ser mayor al 20%: ");
+                myLimpieza.descuento = in.nextShort();
+                if (myLimpieza.descuento > 0.20) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myLimpieza.descuento > 0.20);
+            myLimpieza.disponibleParaVender = true;
         }
         do {
-            precioPagar = (int) (myLimpieza.precioPorUnidad * cantidadComprar);
+            precioFinal = myLimpieza.precioPorUnidad - (myLimpieza.precioPorUnidad * myLimpieza.descuento);
+            precioPagar = myLimpieza.precioPorUnidad * cantidadComprar;
             if (precioPagar < myTienda.saldoEnCaja && cantidadComprar < myTienda.cantidadMaxProductosStock) {
                 myLimpieza.cantidadEnStock = (short) (myLimpieza.cantidadEnStock + cantidadComprar);
-                myLimpieza.precioFinal = (int) (myLimpieza.cantidadEnStock * myLimpieza.precioPorUnidad);
+                myLimpieza.precioFinal = precioFinal + precioFinal * myLimpieza.porcentajeDeGanancia;
                 myTienda.listaLimpieza.add(myLimpieza);
                 myTienda.saldoEnCaja -= precioPagar;
                 myTienda.cantidadMaxProductosStock -= cantidadComprar;

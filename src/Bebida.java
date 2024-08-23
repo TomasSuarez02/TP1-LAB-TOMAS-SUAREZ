@@ -14,6 +14,9 @@ public class Bebida extends Producto {
         Scanner leerString = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Bebida myBebida = new Bebida();
+        short cantidadComprar;
+        float precioFinal;
+        float precioPagar;
         short leer;
         byte op;
         do {
@@ -24,8 +27,6 @@ public class Bebida extends Producto {
         buscarBebida(myTienda, leer);
         boolean condicion;
         condicion = buscarBebida(myTienda, leer) == null;
-        short cantidadComprar;
-        int precioPagar;
         if (!condicion) {
             System.out.println("Ingrese la cantidad que desea comprar: ");
             cantidadComprar = in.nextShort();
@@ -38,11 +39,15 @@ public class Bebida extends Producto {
             System.out.println("Ingrese el precio por unidad: ");
             myBebida.precioPorUnidad = in.nextFloat();
             do {
-                System.out.println("Ingrese el porcentaje de ganancia(No puede ser mayor al 20%): ");
+                System.out.println("Ingrese el porcentaje de ganancia (Formato 0.X) No puede ser mayor al 20%: ");
                 myBebida.porcentajeDeGanancia = in.nextShort();
-            } while (myBebida.porcentajeDeGanancia > 20);
-            System.out.println("Ingrese el descuento aplicable: ");
-            myBebida.descuento = in.nextShort();
+                if (myBebida.porcentajeDeGanancia > 0.20) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myBebida.porcentajeDeGanancia > 0.20);
+            do {
+                System.out.println("Ingrese el descuento aplicable (Formato: 0.X) no puede ser mayor al 10%: ");
+                myBebida.descuento = in.nextShort();
+                if (myBebida.descuento > 0.10) System.out.println("Valor no valido, vuelva a intentar");
+            } while (myBebida.descuento > 0.10);
             myBebida.disponibleParaVender = true;
             System.out.println("Ingrese la graduacion alcoholica: ");
             myBebida.graduacionAlcoholica = in.nextFloat();
@@ -66,11 +71,14 @@ public class Bebida extends Producto {
         }
         do {
             if (myBebida.importado) {
-                precioPagar = (int) ((int) (myBebida.precioPorUnidad * cantidadComprar) * 1.12);
-            } else precioPagar = (int) (myBebida.precioPorUnidad * cantidadComprar);
+                precioFinal = (float) ((myBebida.precioPorUnidad * 1.12) - (myBebida.precioPorUnidad * myBebida.descuento));
+            } else {
+                precioFinal = myBebida.precioPorUnidad - (myBebida.precioPorUnidad * myBebida.descuento);
+            }
+            precioPagar = myBebida.precioPorUnidad * cantidadComprar;
             if (precioPagar < myTienda.saldoEnCaja && cantidadComprar < myTienda.cantidadMaxProductosStock) {
                 myBebida.cantidadEnStock = (short) (myBebida.cantidadEnStock + cantidadComprar);
-                myBebida.precioFinal = (int) (myBebida.cantidadEnStock * myBebida.precioPorUnidad);
+                myBebida.precioFinal = precioFinal + precioFinal * myBebida.porcentajeDeGanancia;
                 myTienda.listaBebidas.add(myBebida);
                 myTienda.saldoEnCaja -= precioPagar;
                 myTienda.cantidadMaxProductosStock -= cantidadComprar;
