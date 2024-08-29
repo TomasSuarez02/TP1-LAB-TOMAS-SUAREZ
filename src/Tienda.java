@@ -14,6 +14,8 @@ public class Tienda {
     List<Producto> venta = new ArrayList<>();
     List<Producto> mostrarPorDescuento = new ArrayList<>();
 
+    //Hola Mundo
+
     public static void menu(Tienda myTienda) throws ParseException {
         Scanner in = new Scanner(System.in);
         System.out.println("Bienvenido a: " + myTienda.nombreTienda);
